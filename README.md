@@ -222,7 +222,3 @@ For MVP, the following enums are auto-detected and stored as String rawValues:
 ## Computed Properties
 
 Computed properties in your domain model are automatically skipped and won't appear in the generated Fluent model.
-
-## License
-
-MIT
