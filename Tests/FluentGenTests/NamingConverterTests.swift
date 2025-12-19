@@ -1,39 +1,51 @@
-import XCTest
+import Testing
 @testable import FluentGenMacros
 
-final class NamingConverterTests: XCTestCase {
-    func testToSnakeCase() {
-        XCTAssertEqual(NamingConverter.toSnakeCase("phoneNumber"), "phone_number")
-        XCTAssertEqual(NamingConverter.toSnakeCase("venueID"), "venue_id")
-        XCTAssertEqual(NamingConverter.toSnakeCase("name"), "name")
-        XCTAssertEqual(NamingConverter.toSnakeCase("isActive"), "is_active")
-        XCTAssertEqual(NamingConverter.toSnakeCase("createdAt"), "created_at")
-        XCTAssertEqual(NamingConverter.toSnakeCase("updatedAt"), "updated_at")
-        XCTAssertEqual(NamingConverter.toSnakeCase("firstName"), "first_name")
-        XCTAssertEqual(NamingConverter.toSnakeCase("lastName"), "last_name")
+@Suite("NamingConverter Tests")
+struct NamingConverterTests {
+    @Test("toSnakeCase converts camelCase to snake_case")
+    func toSnakeCase() {
+        #expect(NamingConverter.toSnakeCase("phoneNumber") == "phone_number")
+        #expect(NamingConverter.toSnakeCase("venueID") == "venue_id")
+        #expect(NamingConverter.toSnakeCase("name") == "name")
+        #expect(NamingConverter.toSnakeCase("isActive") == "is_active")
+        #expect(NamingConverter.toSnakeCase("createdAt") == "created_at")
+        #expect(NamingConverter.toSnakeCase("updatedAt") == "updated_at")
+        #expect(NamingConverter.toSnakeCase("firstName") == "first_name")
+        #expect(NamingConverter.toSnakeCase("lastName") == "last_name")
     }
 
-    func testPluralize() {
-        XCTAssertEqual(NamingConverter.pluralize("Venue"), "venues")
-        XCTAssertEqual(NamingConverter.pluralize("Event"), "events")
-        XCTAssertEqual(NamingConverter.pluralize("User"), "users")
-        XCTAssertEqual(NamingConverter.pluralize("Guest"), "guests")
-        XCTAssertEqual(NamingConverter.pluralize("Ticket"), "tickets")
-        XCTAssertEqual(NamingConverter.pluralize("Message"), "messages")
-        XCTAssertEqual(NamingConverter.pluralize("Category"), "categories")
-        XCTAssertEqual(NamingConverter.pluralize("Address"), "addresses")
+    @Test("toSnakeCase handles consecutive uppercase letters")
+    func toSnakeCaseWithConsecutiveUppercase() {
+        #expect(NamingConverter.toSnakeCase("URLString") == "url_string")
+        #expect(NamingConverter.toSnakeCase("XMLParser") == "xml_parser")
+        #expect(NamingConverter.toSnakeCase("HTTPSConnection") == "https_connection")
     }
 
-    func testModelClassName() {
-        XCTAssertEqual(NamingConverter.modelClassName("Venue"), "VenueModel")
-        XCTAssertEqual(NamingConverter.modelClassName("Event"), "EventModel")
-        XCTAssertEqual(NamingConverter.modelClassName("User"), "UserModel")
+    @Test("pluralize converts singular words to plural")
+    func pluralize() {
+        #expect(NamingConverter.pluralize("Venue") == "venues")
+        #expect(NamingConverter.pluralize("Event") == "events")
+        #expect(NamingConverter.pluralize("User") == "users")
+        #expect(NamingConverter.pluralize("Guest") == "guests")
+        #expect(NamingConverter.pluralize("Ticket") == "tickets")
+        #expect(NamingConverter.pluralize("Message") == "messages")
+        #expect(NamingConverter.pluralize("Category") == "categories")
+        #expect(NamingConverter.pluralize("Address") == "addresses")
     }
 
-    func testCapitalize() {
-        XCTAssertEqual(NamingConverter.capitalize("venue"), "Venue")
-        XCTAssertEqual(NamingConverter.capitalize("event"), "Event")
-        XCTAssertEqual(NamingConverter.capitalize(""), "")
-        XCTAssertEqual(NamingConverter.capitalize("a"), "A")
+    @Test("modelClassName appends Model suffix")
+    func modelClassName() {
+        #expect(NamingConverter.modelClassName("Venue") == "VenueModel")
+        #expect(NamingConverter.modelClassName("Event") == "EventModel")
+        #expect(NamingConverter.modelClassName("User") == "UserModel")
+    }
+
+    @Test("capitalize capitalizes first letter")
+    func capitalize() {
+        #expect(NamingConverter.capitalize("venue") == "Venue")
+        #expect(NamingConverter.capitalize("event") == "Event")
+        #expect(NamingConverter.capitalize("") == "")
+        #expect(NamingConverter.capitalize("a") == "A")
     }
 }
