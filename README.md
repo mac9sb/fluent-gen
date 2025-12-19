@@ -21,7 +21,7 @@ Add FluentGen as a dependency in your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(path: "../path/to/fluent-gen"),
+    .package(url: "https://gitea.com/maclong/fluent-gen.git", from: "1.0.0"),
     .package(url: "https://github.com/vapor/fluent.git", from: "4.9.0"),
 ],
 targets: [
