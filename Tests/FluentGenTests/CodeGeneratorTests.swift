@@ -1,5 +1,6 @@
-import Testing
 import SwiftSyntax
+import Testing
+
 @testable import FluentGenMacros
 
 @Suite("CodeGenerator Tests")
@@ -22,7 +23,7 @@ struct CodeGeneratorTests {
                 kind: .field(type: "String"),
                 isOptional: false,
                 originalType: "String"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "User", properties: properties)
@@ -68,7 +69,7 @@ struct CodeGeneratorTests {
                 kind: .field(type: "Int"),
                 isOptional: false,
                 originalType: "Int"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "User", properties: properties)
@@ -134,7 +135,7 @@ struct CodeGeneratorTests {
                 kind: .timestampUpdate,
                 isOptional: true,
                 originalType: "Date?"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "User", properties: properties)
@@ -162,7 +163,7 @@ struct CodeGeneratorTests {
                 kind: .enum(type: "UserRole", underlyingType: "String"),
                 isOptional: true,
                 originalType: "UserRole?"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "User", properties: properties)
@@ -222,7 +223,7 @@ struct CodeGeneratorTests {
                 kind: .enum(type: "EventStatus", underlyingType: "String"),
                 isOptional: false,
                 originalType: "EventStatus"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "Event", properties: properties)
@@ -272,7 +273,7 @@ struct CodeGeneratorTests {
                 kind: .timestampCreate,
                 isOptional: true,
                 originalType: "Date?"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "Event", properties: properties)
@@ -356,7 +357,7 @@ struct CodeGeneratorTests {
                 kind: .timestampUpdate,
                 isOptional: true,
                 originalType: "Date?"
-            )
+            ),
         ]
 
         let decl = try generator.generateFluentModel(structName: "Event", properties: properties)

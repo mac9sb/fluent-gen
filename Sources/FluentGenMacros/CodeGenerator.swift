@@ -13,11 +13,11 @@ struct CodeGenerator {
 
         // Generate class code as a string (simpler than building with SwiftSyntax builders)
         var classCode = """
-        public final class \(modelName): Model, @unchecked Sendable {
-            public static let schema = "\(tableName)"
+            public final class \(modelName): Model, @unchecked Sendable {
+                public static let schema = "\(tableName)"
 
 
-        """
+            """
 
         // 1. Generate property declarations
         for prop in properties {
@@ -45,72 +45,71 @@ struct CodeGenerator {
         switch prop.kind {
         case .id:
             return """
-                @ID(key: .id)
-                public var id: UUID?
+                    @ID(key: .id)
+                    public var id: UUID?
 
 
-            """
+                """
 
         case .field(let type):
             return """
-                @Field(key: "\(prop.columnName)")
-                public var \(prop.name): \(type)
+                    @Field(key: "\(prop.columnName)")
+                    public var \(prop.name): \(type)
 
 
-            """
+                """
 
         case .optionalField(let type):
             return """
-                @OptionalField(key: "\(prop.columnName)")
-                public var \(prop.name): \(type)?
+                    @OptionalField(key: "\(prop.columnName)")
+                    public var \(prop.name): \(type)?
 
 
-            """
+                """
 
         case .parent(let entityName):
             let modelType = NamingConverter.modelClassName(
                 NamingConverter.capitalize(entityName)
             )
             return """
-                @Parent(key: "\(prop.columnName)")
-                public var \(entityName): \(modelType)
+                    @Parent(key: "\(prop.columnName)")
+                    public var \(entityName): \(modelType)
 
 
-            """
+                """
 
         case .timestampCreate:
             return """
-                @Timestamp(key: "\(prop.columnName)", on: .create)
-                public var \(prop.name): Date?
+                    @Timestamp(key: "\(prop.columnName)", on: .create)
+                    public var \(prop.name): Date?
 
 
-            """
+                """
 
         case .timestampUpdate:
             return """
-                @Timestamp(key: "\(prop.columnName)", on: .update)
-                public var \(prop.name): Date?
+                    @Timestamp(key: "\(prop.columnName)", on: .update)
+                    public var \(prop.name): Date?
 
 
-            """
+                """
 
         case .enum(_, _):
             // Enums stored as String rawValue
-            if prop.isOptional {
+            guard prop.isOptional else {
                 return """
+                        @Field(key: "\(prop.columnName)")
+                        public var \(prop.name): String
+
+
+                    """
+            }
+            return """
                     @OptionalField(key: "\(prop.columnName)")
                     public var \(prop.name): String?
 
 
                 """
-            } else {
-                return """
-                    @Field(key: "\(prop.columnName)")
-                    public var \(prop.name): String
-
-
-                """
-            }
         }
     }
 

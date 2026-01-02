@@ -2,22 +2,22 @@ import SwiftSyntax
 
 /// The kind of property and how it should be mapped to Fluent
 enum PropertyKind {
-    case id(type: String)                                   // UUID id
-    case field(type: String)                                // Required primitive
-    case optionalField(type: String)                        // Optional primitive
-    case parent(entityName: String)                         // Foreign key (venueID)
-    case timestampCreate                                    // createdAt
-    case timestampUpdate                                    // updatedAt
-    case `enum`(type: String, underlyingType: String)      // Enum stored as rawValue
+    case id(type: String)  // UUID id
+    case field(type: String)  // Required primitive
+    case optionalField(type: String)  // Optional primitive
+    case parent(entityName: String)  // Foreign key (venueID)
+    case timestampCreate  // createdAt
+    case timestampUpdate  // updatedAt
+    case `enum`(type: String, underlyingType: String)  // Enum stored as rawValue
 }
 
 /// Information about a struct property
 struct PropertyInfo {
-    let name: String              // camelCase property name
-    let columnName: String        // snake_case column name
+    let name: String  // camelCase property name
+    let columnName: String  // snake_case column name
     let kind: PropertyKind
     let isOptional: Bool
-    let originalType: String      // Full type from source
+    let originalType: String  // Full type from source
 }
 
 /// Analyzes struct properties to determine their Fluent mapping
@@ -37,8 +37,9 @@ struct PropertyAnalyzer {
 
         // Extract property name and type
         guard let binding = decl.bindings.first,
-              let pattern = binding.pattern.as(IdentifierPatternSyntax.self),
-              let typeAnnotation = binding.typeAnnotation else {
+            let pattern = binding.pattern.as(IdentifierPatternSyntax.self),
+            let typeAnnotation = binding.typeAnnotation
+        else {
             return nil
         }
 
@@ -95,7 +96,7 @@ struct PropertyAnalyzer {
             "EventStatus",
             "UserRole",
             "VenueTier",
-            "TicketType"
+            "TicketType",
         ]
         return knownEnums.contains(typeName)
     }

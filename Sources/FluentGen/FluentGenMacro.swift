@@ -50,7 +50,8 @@
 ///
 /// **Computed properties are automatically skipped.**
 @attached(peer, names: suffixed(Model))
-public macro FluentModel() = #externalMacro(
-    module: "FluentGenMacros",
-    type: "FluentModelMacro"
-)
+public macro FluentModel() =
+    #externalMacro(
+        module: "FluentGenMacros",
+        type: "FluentModelMacro"
+    )
