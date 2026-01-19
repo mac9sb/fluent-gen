@@ -163,7 +163,7 @@ struct CodeGenerator {
 
             switch prop.kind {
             case .id:
-                code += "            id: id!\(separator)\n"
+                code += "            id: id ?? UUID()\(separator)\n"
 
             case .field:
                 code += "            \(prop.name): \(prop.name)\(separator)\n"
