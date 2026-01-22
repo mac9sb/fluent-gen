@@ -1,5 +1,5 @@
-import Testing
 
+import Testing
 @testable import FluentGenMacros
 
 @Suite("NamingConverter Tests")

@@ -1,0 +1,49 @@
+# Getting Started with FluentGen
+
+Learn how to use FluentGen to generate Fluent models.
+
+@Tutorial(time: 10) {
+    @Intro(title: "Get Started with FluentGen") {
+        FluentGen automatically generates Fluent ORM models from your structs.
+    }
+
+    @Section(title: "Add FluentGen to Your Project") {
+        @ContentAndMedia {
+            Add FluentGen to your `Package.swift`:
+
+            ```swift
+            dependencies: [
+                .package(url: "https://github.com/your-org/fluent-gen", from: "1.0.0")
+            ]
+            ```
+        }
+    }
+
+    @Section(title: "Define Your Models") {
+        @ContentAndMedia {
+            Apply the `@FluentModel` macro:
+
+            ```swift
+            import FluentGen
+
+            @FluentModel
+            struct User {
+                var id: UUID?
+                var name: String
+                var email: String
+            }
+            ```
+        }
+    }
+
+    @Section(title: "Use Generated Models") {
+        @ContentAndMedia {
+            The macro automatically generates a Fluent model:
+
+            ```swift
+            let user = UserModel(name: "John", email: "john@example.com")
+            try await user.save(on: database)
+            ```
+        }
+    }
+}

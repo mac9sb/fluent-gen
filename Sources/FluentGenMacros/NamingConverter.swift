@@ -1,7 +1,19 @@
-/// Utilities for converting between naming conventions
+/// Utilities for converting between Swift and database naming conventions.
+///
+/// Provides functions to convert between camelCase (Swift) and snake_case (database)
+/// naming conventions, and to generate model class names.
 enum NamingConverter {
-    /// Convert camelCase to snake_case
-    /// Examples: phoneNumber → phone_number, venueID → venue_id
+    /// Converts camelCase to snake_case for database column names.
+    ///
+    /// Handles edge cases like consecutive uppercase letters and acronyms.
+    ///
+    /// - Parameter input: The camelCase string to convert.
+    /// - Returns: The snake_case equivalent.
+    ///
+    /// ## Examples
+    /// - `phoneNumber` → `phone_number`
+    /// - `venueID` → `venue_id`
+    /// - `URLString` → `url_string`
     static func toSnakeCase(_ input: String) -> String {
         var result = ""
         let chars = Array(input)
@@ -29,8 +41,18 @@ enum NamingConverter {
         return result
     }
 
-    /// Pluralize a word (simple implementation)
-    /// Examples: venue → venues, event → events, category → categories
+    /// Pluralizes a word for table name generation.
+    ///
+    /// Simple implementation that handles common cases. More complex pluralization
+    /// rules may be added in the future.
+    ///
+    /// - Parameter input: The singular word to pluralize.
+    /// - Returns: The pluralized form.
+    ///
+    /// ## Examples
+    /// - `venue` → `venues`
+    /// - `event` → `events`
+    /// - `category` → `categories`
     static func pluralize(_ input: String) -> String {
         let lowercased = input.lowercased()
         if lowercased.hasSuffix("s") {
@@ -42,8 +64,17 @@ enum NamingConverter {
         }
     }
 
-    /// Generate model class name from struct name
-    /// Example: Venue → VenueModel
+    /// Generates the Fluent model class name from a struct name.
+    ///
+    /// Appends "Model" to the struct name to create the generated class name.
+    ///
+    /// - Parameter structName: The name of the struct.
+    /// - Returns: The model class name (e.g., "VenueModel").
+    ///
+    /// ## Example
+    /// ```swift
+    /// NamingConverter.modelClassName("Venue") // Returns "VenueModel"
+    /// ```
     static func modelClassName(_ structName: String) -> String {
         structName + "Model"
     }

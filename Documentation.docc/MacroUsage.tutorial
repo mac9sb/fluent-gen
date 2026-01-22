@@ -1,0 +1,52 @@
+# Using FluentGen Macros
+
+Learn how to use FluentGen macros effectively.
+
+@Tutorial(time: 15) {
+    @Intro(title: "FluentGen Macro Usage") {
+        FluentGen provides macros to simplify Fluent model creation.
+    }
+
+    @Section(title: "Basic Model") {
+        @ContentAndMedia {
+            Create a simple model:
+
+            ```swift
+            @FluentModel
+            struct Product {
+                var id: UUID?
+                var name: String
+                var price: Double
+            }
+            ```
+        }
+    }
+
+    @Section(title: "Relationships") {
+        @ContentAndMedia {
+            Define relationships:
+
+            ```swift
+            @FluentModel
+            struct Order {
+                var id: UUID?
+                var userId: UUID
+                var total: Double
+            }
+            ```
+        }
+    }
+
+    @Section(title: "Customization") {
+        @ContentAndMedia {
+            Customize generated models with macro parameters:
+
+            ```swift
+            @FluentModel(table: "custom_table_name")
+            struct CustomModel {
+                // ...
+            }
+            ```
+        }
+    }
+}

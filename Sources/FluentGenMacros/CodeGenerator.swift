@@ -1,9 +1,25 @@
 import SwiftSyntax
 import SwiftSyntaxBuilder
 
-/// Generates Fluent model class code from property information
+/// Generates Fluent model class source code from property information.
+///
+/// Takes analyzed property information and generates a complete Fluent model class
+/// with property wrappers, initializers, and conversion methods.
 struct CodeGenerator {
-    /// Generate a complete Fluent model class
+    /// Generates a complete Fluent model class declaration.
+    ///
+    /// Creates a Fluent model class with:
+    /// - Schema definition
+    /// - Property declarations with appropriate wrappers
+    /// - Empty initializer
+    /// - Initializer from DTO
+    /// - Conversion method to DTO
+    ///
+    /// - Parameters:
+    ///   - structName: The name of the source struct.
+    ///   - properties: Array of analyzed property information.
+    /// - Returns: A `DeclSyntax` containing the generated class.
+    /// - Throws: An error if code generation fails.
     func generateFluentModel(
         structName: String,
         properties: [PropertyInfo]

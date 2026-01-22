@@ -19,6 +19,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.9.0"),
+        .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.3"),
+        .package(url: "https://github.com/swiftlang/swift-testing", from: "0.11.0"),
     ],
     targets: [
         // Macro implementation (compiler plugin)
@@ -46,6 +48,7 @@ let package = Package(
                 "FluentGen",
                 "FluentGenMacros",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+                .product(name: "Testing", package: "swift-testing"),
             ]
         ),
     ]

@@ -1,6 +1,6 @@
 import SwiftParser
-import SwiftSyntax
 import Testing
+import SwiftSyntax
 
 @testable import FluentGenMacros
 

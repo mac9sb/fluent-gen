@@ -1,6 +1,9 @@
 import SwiftSyntax
 
-/// The kind of property and how it should be mapped to Fluent
+/// Classification of how a struct property should be mapped to Fluent.
+///
+/// Determines which Fluent property wrapper and column type to use for each
+/// property in the generated model.
 enum PropertyKind {
     case id(type: String)  // UUID id
     case field(type: String)  // Required primitive
@@ -11,7 +14,10 @@ enum PropertyKind {
     case `enum`(type: String, underlyingType: String)  // Enum stored as rawValue
 }
 
-/// Information about a struct property
+/// Metadata about a struct property for Fluent model generation.
+///
+/// Contains the property name, column name, type information, and mapping kind
+/// needed to generate the corresponding Fluent model property.
 struct PropertyInfo {
     let name: String  // camelCase property name
     let columnName: String  // snake_case column name
@@ -20,10 +26,21 @@ struct PropertyInfo {
     let originalType: String  // Full type from source
 }
 
-/// Analyzes struct properties to determine their Fluent mapping
+/// Analyzes struct property declarations to determine Fluent mapping.
+///
+/// Examines Swift syntax to extract property information and classify how each
+/// property should be represented in the generated Fluent model.
 struct PropertyAnalyzer {
-    /// Analyze a property declaration and return PropertyInfo if it's a stored property
-    /// Returns nil for computed properties
+    /// Analyzes a property declaration and extracts Fluent mapping information.
+    ///
+    /// Examines the property's name, type, and modifiers to determine the appropriate
+    /// Fluent property wrapper and column configuration.
+    ///
+    /// - Parameters:
+    ///   - decl: The variable declaration syntax to analyze.
+    ///   - context: The containing struct declaration for context.
+    /// - Returns: `PropertyInfo` for stored properties, `nil` for computed properties.
+    /// - Throws: An error if the property cannot be analyzed.
     func analyze(
         _ decl: VariableDeclSyntax?,
         in context: StructDeclSyntax

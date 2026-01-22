@@ -1,8 +1,28 @@
 import SwiftSyntax
 import SwiftSyntaxMacros
 
-/// Main macro implementation for @FluentModel
+/// Macro implementation that generates Fluent model classes from struct declarations.
+///
+/// This macro analyzes a struct declaration and generates a corresponding Fluent
+/// model class with appropriate property wrappers, initializers, and conversion methods.
+///
+/// The generated model follows Fluent ORM conventions and includes:
+/// - Table schema definition
+/// - Property wrappers (@ID, @Field, @OptionalField, @Parent, @Timestamp)
+/// - Initializers for creating from DTOs
+/// - Conversion methods to DTOs
 public struct FluentModelMacro: PeerMacro {
+    /// Expands the macro to generate a Fluent model class.
+    ///
+    /// Analyzes the struct declaration, extracts property information, and generates
+    /// a peer Fluent model class.
+    ///
+    /// - Parameters:
+    ///   - node: The attribute syntax node.
+    ///   - declaration: The struct declaration being expanded.
+    ///   - context: The macro expansion context.
+    /// - Returns: An array containing the generated model class declaration.
+    /// - Throws: `MacroError` if the declaration is not a struct or has invalid properties.
     public static func expansion(
         of node: AttributeSyntax,
         providingPeersOf declaration: some DeclSyntaxProtocol,
