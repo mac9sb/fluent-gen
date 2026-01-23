@@ -1,7 +1,7 @@
 import SwiftSyntax
-import Testing
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
+import Testing
 
 @testable import FluentGenMacros
 
