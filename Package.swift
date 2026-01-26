@@ -47,7 +47,9 @@ let package = Package(
             dependencies: [
                 "FluentGen",
                 "FluentGenMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "Testing", package: "swift-testing"),
             ]
         ),
