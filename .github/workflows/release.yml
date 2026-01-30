@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   release:
@@ -47,26 +47,31 @@ jobs:
         run: |
           TAG="${{ github.ref_name }}"
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-          
+
+          echo "## What's Changed in $TAG" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
           if [ -z "$PREV_TAG" ]; then
-            echo "No previous tag found, generating changelog from all commits"
-            git log --pretty=format:"- %s (%h)" > CHANGELOG.md
+            echo "Initial release" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --pretty=format:"- %s (%h)" >> CHANGELOG.md
           else
-            echo "Generating changelog from $PREV_TAG to $TAG"
-            git log --pretty=format:"- %s (%h)" ${PREV_TAG}..HEAD > CHANGELOG.md
+            echo "Changes since $PREV_TAG:" >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            git log --pretty=format:"- %s (%h)" ${PREV_TAG}..HEAD >> CHANGELOG.md
           fi
-          
-          echo "## Changes in $TAG" > RELEASE_NOTES.md
-          echo "" >> RELEASE_NOTES.md
-          cat CHANGELOG.md >> RELEASE_NOTES.md
+
+          echo "" >> CHANGELOG.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${TAG}" >> CHANGELOG.md
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body_path: RELEASE_NOTES.md
-          generate_release_notes: false
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
