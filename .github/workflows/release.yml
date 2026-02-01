@@ -17,4 +17,4 @@ jobs:
       generate_release_notes: false
       release_body_intro: FluentGen is a Swift library consumed via Swift Package Manager.
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
